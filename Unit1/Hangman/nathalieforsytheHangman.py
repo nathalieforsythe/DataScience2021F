@@ -5,16 +5,14 @@ guessesLeft = 10
 def runGame():
     pickWord()
     welcome()
-    
     # while loop:
-        # enterGuess
-        # checkGuess
+        # enterGuess()
+        # checkGuess()
         # end when word is guessed/guesses run out
+    pass
 
 def pickWord():
-    # country = random country
-    # pick a random word from countries list
-    pass
+    country = countries[1] # figure out how to pick randomly
 
 def welcome():
     print('Welcome to Hangman')
@@ -23,29 +21,25 @@ def welcome():
 def enterGuess():
     guess = input('Guess a letter: ')
     guessedLetters.append(guess)
-    print(guessedLetters)
     
 def checkGuess():
     for letter in guessedLetters:
         if guess == true:
             print('Your guess is correct!')
             displayGuesses()
-            displayGuessesLeft()
         elif guess == false:
             print('Your guess is incorrect.')
             displayGuesses()
-            displayGuessesLeft()
         else:
             print('You already guessed that.')
         displayGuesses()
         enterGuess()
         
-def displayGuessesLeft():
+def updateGuesses():
     guessesLeft -= 1 # local variable? for some reason 
-    print('You have ' + guessesLeft + 'guesses left.')
+    
     
 def displayGuesses():
     print('You have guessed: ')
     print(guessedLetters)
-
-enterGuess()
+    print('You have ' + guessesLeft + 'guesses left.')
