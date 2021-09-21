@@ -3,43 +3,44 @@ guessedLetters = []
 guessesLeft = 10
 
 def runGame():
-    pickWord()
-    welcome()
-    # while loop:
-        # enterGuess()
-        # checkGuess()
+    country = pickWord()
+    welcome(country)
+    while guessesLeft > 0: # or entire word is guessed
+        guess = enterGuess()
+        checkGuess(guess, country)
         # end when word is guessed/guesses run out
-    pass
 
 def pickWord():
     country = countries[1] # figure out how to pick randomly
+    return country
 
-def welcome():
+def welcome(country):
     print('Welcome to Hangman')
-    print('The word is ' + len(country) + 'letters long, and the theme is countries.')
+    print('The word is ' + str(len(country)) + ' letters long, and the theme is countries.')
 
 def enterGuess():
     guess = input('Guess a letter: ')
     guessedLetters.append(guess)
+    return guess
     
-def checkGuess():
-    for letter in guessedLetters:
-        if guess == true:
+def checkGuess(guess, country):
+    for i in range(len(country)):
+        x = country[i]
+        if x == guess:
             print('Your guess is correct!')
-            displayGuesses()
-        elif guess == false:
+        elif x != guess:
             print('Your guess is incorrect.')
-            displayGuesses()
         else:
             print('You already guessed that.')
-        displayGuesses()
-        enterGuess()
         
 def updateGuesses():
-    guessesLeft -= 1 # local variable? for some reason 
-    
-    
+    global guessesLeft
+    guessesLeft -= 1
+    # fill in guessed letters
+        
 def displayGuesses():
     print('You have guessed: ')
     print(guessedLetters)
-    print('You have ' + guessesLeft + 'guesses left.')
+    print('You have ' + str(guessesLeft) + ' guesses left.')
+    
+runGame()
