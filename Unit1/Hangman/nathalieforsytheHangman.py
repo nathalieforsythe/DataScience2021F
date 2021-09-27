@@ -1,15 +1,10 @@
-countries = ['canada', 'mexico', 'france']
+countries = ['canada', 'mexico', 'france', 'portugal', 'germany', 'denmark']
 guessedLetters = []
 guessesLeft = 10
 
 def pickWord():
-    country = countries[1] # figure out how to pick randomly
+    country = countries[3] # figure out how to pick randomly
     return country
-    
-    
-    global secretWord
-    secretWord = ['m', 'e', 'x', 'i', 'c', 'o']
-    # come back to this later so that the program does it itself
     
 def createWordDisplay():
     global displayWord
@@ -17,7 +12,10 @@ def createWordDisplay():
     for i in range(len(country)):
         displayWord.append('*')
         
-    global 
+    global secretWord
+    secretWord = []
+    for i in range(len(country)):
+        secretWord.append(country[i])
 
 def welcome(country):
     print('Welcome to Hangman')
@@ -35,6 +33,7 @@ def checkForCorrectGuess(guess, country):
         
     if guessedCorrect:
         print('Your guess is correct!') 
+        fillInLetters(guess)
     else:
         print('Your guess is incorrect.')
 
@@ -46,24 +45,34 @@ def updateGuesses(guess):
     guessedLetters.append(guess)
     global guessesLeft
     guessesLeft -= 1
-    # fill in guessed letters
+    
+def fillInLetters(guess): 
+    for i in range(len(secretWord)):
+        if secretWord[i] == guess:
+            displayWord[i] = guess
+    print(displayWord)
     
 def displayGuesses():
     print('You have guessed: ')
     print(guessedLetters)
     print('You have ' + str(guessesLeft) + ' guesses left.')
-    # something to display progress in word - will probably help with ending the game when the whole word is guessed
 
 def runGame():
-    while guessesLeft > 0: # or entire word is guessed
+    while guessesLeft > 0 or secretWord != displayWord: 
         guess = enterGuess()
-        
-        if guess in guessedLetters:
+        if secretWord == displayWord: # this doesn't work
+            gameOver()
+        elif guess in guessedLetters:
             print('You already guessed that.')
             displayGuesses()
         else:
             checkForCorrectGuess(guess, country)
-        # end when word is guessed/guesses run out - only stops when guesses run out
+        
+def gameOver():
+    if displayWord == secretWord:
+        print('Congratulations! You guessed the word: ' + country)
+    elif guessesLeft == 0:
+        print('Oh no! You are all out of guesses. The word was: ' + country)
     
 country = pickWord()
 createWordDisplay()
